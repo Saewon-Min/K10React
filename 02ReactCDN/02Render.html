@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02Render.html</title>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="mydiv1"></div>
+    <div id="mydiv2"></div>
+
+    <script type="text/babel">
+    /*
+        ReactDOM.render() 함수
+            : HTMl코드를 웹브라우저의 지정된 DOM엘리먼트에 렌더링 해주는 함수
+            [형식]
+                ReactDOM.render(HTML코드(JSX) 혹은 컴포넌트, 표시할 DOM 엘리먼트);
+                Ex)
+                    <div></div>
+                    <div></div>     => 에러발생(최상위태그가 2개이기때문에)
+                    
+                    <div>
+                        <div></div>
+                        <div></div>
+                    </div>              => 정상출력(최상위태그가 1개)
+    */
+
+
+
+        const myElement = (
+        <table border="1">
+            <tr>
+                <th>Name</th>
+            </tr>
+            <tr>
+                <td>알라딘</td>
+            </tr>
+            <tr>
+                <td>자스민</td>
+            </tr>
+        </table>    
+        );
+
+        class Myclass extends React.Component{
+            render() {
+                return <h1>React.Component를 상속한 MyClass</h1>
+            }
+        }
+
+        ReactDOM.render(myElement, document.getElementById("mydiv1"));
+        ReactDOM.render(<Myclass/>, document.getElementById("mydiv2"));
+
+    </script>
+</body>
+</html>

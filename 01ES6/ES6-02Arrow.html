@@ -56,7 +56,9 @@
         */
 
         // 함수명 = (매개변수정의) => 출력포맷;
-        hello3 = (val) => "Hello "+val;
+        hello3 = (val) => "Hello "+val; // Hello World!
+        hello3 = (val) => { "Hello "+val; } // Undefined
+        hello3 = (val) => { return "Hello "+val; } // Hello World!
         document.getElementById("myPoint").innerHTML = hello3("World!");
 
     </script>

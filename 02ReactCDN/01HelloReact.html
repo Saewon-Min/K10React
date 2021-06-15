@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01HelloReact.html</title>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <div id="mydiv"></div>
+    <!-- 
+        React.js
+        - 페이스북에서 뉴스피드를 표현하기 위한 기능으로 2011년 처음 만들어짐
+        - 최초 공개 릴리스(V0.3.0)는 2013년 7월에 있었음
+        - 현재 2021년 6월 최신버전은 17.0.2
+        - create-react-app 에서는 babel, webpack, jest 등의 기능을 지원함
+     -->
+    <script type="text/babel">
+        // JS의 클래스를 통해 리액트 컴포넌트를 생성한다.
+        class Hello extends React.Component{
+            // 컴포넌트에서는 render()함수를 통해 출력할 내용을 반환해야 한다.
+            render() {
+                return <h1>Hello React</h1>
+            }
+        }
+        // 컴포넌트를 지정한 엘리먼트에 출력한다. 컴포넌트는 <컴포넌트명 /> 형식으로 사용한다.
+        ReactDOM.render(<Hello />,  document.getElementById("mydiv"));
+
+    </script>
+</body>
+</html>
