@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const num = 100;
+        let sumLimit = function(start, end){
+            let sum = 0;
+            for(var i = start;i<=end;i++){
+                sum += i;
+            }
+            return sum;
+        }
+
+        let result = sumLimit(1,10);
+
+
+        // 화살표 함수
+        let sumLimit2 = (start, end) =>{
+            let sum2=0;
+            for(var i=start;i<=end;i++){
+                sum2 += i;
+            }
+            return sum2;
+        }
+
+        let result2 = sumLimit2(1,100);
+
+
+
+    </script>
+
+    <!-- this - 화살표 함수 사용할때 -->
+    <button id="btn">클릭하세요</button>
+    <p id="myDiv"></p>
+    
+    <script>
+    class Car{
+        constructor() {
+            this.color = "빨간색";
+        }
+
+
+        changeColor = () =>{
+            document.getElementById('myDiv').innerHTML += this.color;
+            document.getElementById('myDiv').innerHTML += this;
+        }
+
+    }   
+
+    myCar = new Car();
+
+    window.addEventListener("load",myCar.changeColor);
+    document.getElementById('btn').addEventListener("click",myCar.changeColor);
+
+    </script>
+
+    <script>
+        // 부모 클래스
+        class Car2{
+            constructor(b) {
+                this.brand = b;
+            }
+
+            showCar = () =>{
+                return "내 자동차의 제조사는 " +this.brand+ "입니다";
+            }
+
+        }
+
+        myCar2 = new Car2("BMW");
+        
+    </script>
+    <script>
+        // 자식 클래스 : Car2를 상속 받는다
+        class Model extends Car2{
+            constructor(b,m) {
+                super(b);
+                this.model = m;
+            }
+            showModel(){
+                return this.showCar() + "내 자동차의 이름은 "+
+                    this.model + "입니다";
+            }
+        }
+
+        modelCar = new Model("Benz","밍카");
+
+    </script>
+
+
+    <!-- bind() 함수 -->
+    <script>
+        var obj = {name:"saewon"};
+
+        function myBind(){
+            console.log('this.name',this.name);
+        }
+
+        var myBinding = myBind.bind(obj);
+
+        myBinding();
+        myBind();
+
+        class Point{
+            constructor(x,y) {
+                this.x = x;
+                this.y = y;
+            }
+
+            info(){
+                console.log('템플릿문자열',`x:${this.x}, y:${this.y}`);
+                console.log('일반JS사용','x:',this.x,'y:',this.y);
+            }
+        }
+
+        var point1 = new Point(10,20);
+        point1.info()
+
+        var pointobj = {x:100,y:200};
+        point1.info.bind(pointobj);
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
