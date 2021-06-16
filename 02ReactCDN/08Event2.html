@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05Props.html</title>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+</head>
+<body>
+    <h3>파라미터 전달하기-화살표함수</h3>    
+    <div id="myDiv4"></div>
+    <script type="text/babel">
+        class Baseball extends React.Component{
+            hitBall = (str) => {
+                alert(str);
+            }
+
+            /*
+            화살표 함수를 통해 매개변수를 받아야 한다면 이벤트 핸들러 내에서
+            작성할때 아래와 같이 화살표 함수 원형을 그대로 기술해야 한다.
+            그렇지 않으면 화면 로딩과 동시에 함수가 호출된다.
+            */
+            render(){
+                return(
+                    <button onClick={
+                        () => this.hitBall("홈런")
+                    }>매개변수전달</button>
+                );
+            }
+
+        }
+
+        ReactDOM.render(<Baseball />,document.getElementById('myDiv4'));
+
+    </script>
+
+    <h3>파라미터 전달하기-일반함수</h3>    
+    <div id="myDiv5"></div>
+    <script type="text/babel">
+        class Baseball extends React.Component{
+            hitBall (str) {
+                alert(str);
+            }
+
+            /*
+            일반함수를 통해 매개변수를 받아야 한다면, this(해당객체)와
+            함수를 바인딩 한 후 호출해야 한다.
+            단, 이때 bind() 함수의 첫번째 파라미터는 this가 되고, 두번째
+            파마미터에 전달하고자 하는 값을 기술한다.
+            */
+            render(){
+                return(
+                    <button onClick={this.hitBall.bind(this,"홈런2")
+                    }>매개변수전달</button>
+                );
+            }
+
+        }
+
+        ReactDOM.render(<Baseball />,document.getElementById('myDiv5'));
+
+    </script>
+
+    <h3>이벤트 객체 전달하기 - 화살표 함수</h3>    
+    <div id="myDiv6"></div>
+    <script type="text/babel">
+        class EventObjSend1 extends React.Component{
+            // 전달되는 이벤트를 매개변수로 받아 type을 출력하면 해당
+            // 이벤트명이 출력된다. 
+            sendEvent = (msg,evt) => {
+                console.log('화살표함수',msg,evt.type);
+            }
+
+            /*
+            화살표 함수 사용시 이벤트 객체를 전달하려면 event 객체를 ㅇ니수로
+            직접 기술해야 한다.
+            */
+            render(){
+                return(
+                    <div>
+                        <button 
+                        onClick={(event) => this.sendEvent("onClick 이벤트",event)
+                        }>눌러보세요1</button>
+                        <br/>
+                        <input type="text" 
+                        onKeyUp={(event) => this.sendEvent("onKeyUp 이벤트",event)} 
+                            placeholder="입력해주세여1" />
+                    </div>
+                );
+            }
+
+        }
+
+        ReactDOM.render(<EventObjSend1 />,document.getElementById('myDiv6'));
+
+    </script>
+
+    <h3>이벤트 객체 전달하기 - 일반 함수</h3>    
+    <div id="myDiv7"></div>
+    <script type="text/babel">
+        class EventObjSend2 extends React.Component{
+            // 일반 함수의 경우에도 event 객체를 받아서 사용한다.
+            sendEvent(msg,evt) {
+                console.log('일반함수',msg,evt.type);
+            }
+
+            
+            render(){
+                /*
+                일반 함수 사용시 이벤트 객체를 전달하려면, this 사용을 위해
+                함수와 객체를 바인딩하면 bind() 함수의 마지막 인자로
+                자동 전송 된다. 즉, 인수로 기술하지 않아도 된다.
+                */
+                return(
+                    <div>
+                    <button onClick={this.sendEvent.bind(this,"onClick 이벤트")
+                    }>눌러보세요2</button>
+                    <br/>
+                    <input type="text" 
+                    onKeyUp={this.sendEvent.bind(this,"onKeyUp 이벤트")} 
+                        placeholder="입력해주세여2" />
+                    </div>
+                );
+            }
+
+        }
+
+        ReactDOM.render(<EventObjSend2 />,document.getElementById('myDiv7'));
+
+    </script>
+
+</body>
+</html>

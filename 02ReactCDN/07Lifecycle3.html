@@ -4,13 +4,89 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>07Lifecycle1.html</title>
+    <title>07Lifecycle3ㄴ.html</title>
     <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
 
 </head>
 <body>
-    
+
+    <!-- 
+        소멸단계
+        - 컴포넌트가 DOM에서 제거될때 수행되는 메소드로 1가지만 존재한다.
+        - 요청취소, 타이머해제, 구독해제 등의 작업을 처리하기에 적합하다.
+
+        1.componentWillUnmount()
+     -->
+    <h2>컴포넌트의 라이프 사이클 3</h2>
+
+    <h3>초기화단계(Mounting), 업데이트단계(Updating), 소멸단계(Unmounting)의 3단계가 있다.</h3>
+
+    <h4>소멸단계(Unmounting)</h4>
+
+    <h4>1.componentWillUnmount()</h4>
+    <div id="myUnmount1"></div>
+    <script type="text/babel">
+        class Container extends React.Component{
+            // 생성자 
+            constructor(props){
+                super(props);
+                this.state = {showFlag : true};
+            }
+
+            // 버튼을 누를때 state값을 false로 변경한다.
+            deleteGNB = () => {
+                this.setState({showFlag : false});
+            }
+
+            render(){
+                let myheader;
+                // state값이 true인 경우에만 GNB를 랜더링한다.
+                /*
+                GNB(Global Navigation Bar)
+                LNB(Local Navigation Bar)
+                */
+                if(this.state.showFlag){
+                    myheader = <GNBComp/>;
+                };
+                return(
+                    <div>
+                        {myheader}
+                        <button type="button" onClick={this.deleteGNB}>
+                            GNB 삭제
+                        </button>
+                    </div>
+                );
+            }
+        }
+
+        class GNBComp extends React.Component{
+            componentWillUnmount(){
+                alert("GNBComp 컴포넌트는 해제되었습니다.");
+            }
+            render(){
+                return(
+                    <div>
+                        <h2>GNB</h2>
+                        <table border='1'>
+                            <tr>
+                                <td>메뉴1</td>
+                                <td>메뉴2</td>
+                                <td>메뉴3</td>
+                            </tr>
+                        </table>
+                    </div>
+                );
+            }
+        
+        }
+
+
+        ReactDOM.render(<Container/>,document.getElementById('myUnmount1'));
+    </script>
+
+
+
 </body>
 </html>
