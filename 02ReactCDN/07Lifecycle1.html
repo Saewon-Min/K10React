@@ -11,6 +11,94 @@
 
 </head>
 <body>
-    
+
+    <h2>컴포넌트의 라이프 사이클 1</h2>
+
+    <h3>초기화단계(Mounting), 업데이트단계(Updating), 소멸단계(Unmounting)의 3단계가 있다.</h3>
+
+    <h4>초기화단계(Mounting)</h4>
+
+    <h4>1.constructor - 생성자</h4>
+    <div id="myMounting1"></div>
+    <script type="text/babel">
+        class MyClass1 extends React.Component{
+            /* 
+            2번 : 수명주기 함수에서 제일 먼저 호출되는 것이 constructor() 함수이므로 
+                    전달되는 props를 매개변수로 받을 수 있다. 
+            */
+            constructor(props){
+                // 전달된 props가 있다면 super()에서도 매개변수로 사용해야 한다.
+                super(props);
+                this.state = {favoriteFruit : "망고"};
+                // 3번 : 컴포넌트 생성시 전달된 props를 통해 state값을 초기화 한다.
+                this.state = {favoriteFruit : this.props.myFruit};
+            }
+            render(){
+                return(
+                    <h5>내가 좋아하는 과일은 {this.state.favoriteFruit}</h5>
+                );
+            }
+
+
+        }
+
+        //1번 : 컴포넌트 생성시 props를 전달하기 위해 속성을 추가한다.
+        ReactDOM.render(<MyClass1 myFruit="사과"/>,document.getElementById('myMounting1'));
+    </script>
+
+
+    <h4>2.getDerivedStateFromProps()</h4>
+    <div id="myMounting2"></div>
+    <script type="text/babel">
+        class MyClass2 extends React.Component{
+            constructor(props){
+                super(props);
+                this.state = {favoriteMovie : "알라딘"};
+            }
+            static getDerivedStateFromProps(props, state){
+                return {favoriteMovie  : props.favMovie};
+            }
+
+            render(){
+                return(
+                    <h5>최근에 본 재밌는 영화 : {this.state.favoriteMovie}</h5>
+                );
+            }
+
+
+        }
+        ReactDOM.render(<MyClass2 favMovie="어벤져스:앤드게임" />,document.getElementById('myMounting2'));
+    </script>
+
+    <h4>3.render()</h4>
+    <div id="myMounting3">
+        render()메소드는 필수적으로 사용하는 함수이므로 생략
+    </div>
+
+
+    <h4>4.componentDidMount()</h4>
+    <div id="myMounting4"></div>
+    <script type="text/babel">
+        class MyClass4 extends React.Component{
+            constructor(props){
+                super(props);
+                this.state = {works : "야근?"};
+            }
+            componentDidMount(){
+                setTimeout(()=>{
+                    this.setState({works:"칼퇴!"})
+                }, 2000)
+            }
+
+            render(){
+                return(
+                    <h5>오늘은 {this.state.works}</h5>
+                );
+            }
+
+
+        }
+        ReactDOM.render(<MyClass4 />,document.getElementById('myMounting4'));
+    </script>
 </body>
 </html>

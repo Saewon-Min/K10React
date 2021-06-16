@@ -11,6 +11,125 @@
 
 </head>
 <body>
-    
+    <!-- 
+        Props(프롭스)
+        - React의 구성요소에 전달되는 일종의 매개변수(파라미터)를 의미한다.
+        - 주로 HTMl속성을 통해 컴포넌트로 전달된다
+        - 개바에서 많이 사용되는 용어인 Properties(프로퍼티)의 줄임말이다.
+        - 사용자가 컴포넌트로 전달해서 변경되지 않고 보관되는 읽기전용 데이터이다.
+        - 만약 변경해야 한다면 컴포넌트 내부가 아닌, 부모 컴포넌트에서 변경해야 한다.
+
+     -->
+    <h2>Props01</h2>
+    <h3>컴포넌트로 HTML속성 Props 보내기</h3>
+    <div id="myDiv"></div>
+    <script type="text/babel">
+        class Colorful extends React.Component{
+            render(){
+                /*
+                전달받은 Props는 표현식을 통해 접근한다. 
+                {this.props.프롭스 속성명}
+                */
+                return <h4>난 {this.props.color} 컬러가 좋더라</h4>;
+            }
+        }
+        /*
+        Colorful 컴포넌트를 랜더링 할때 color라는 Props를 전달한다.
+        */
+        ReactDOM.render(<Colorful color="빨간색"/> , document.getElementById("myDiv"));
+
+
+    </script>
+
+    <h2>Props02</h2>
+    <h3>HTML 속성을 변수 처리 후 Props 보내기</h3>
+    <div id="myDiv2"></div>
+    <script type="text/babel">
+        class Food extends React.Component{
+            render(){
+                return <h4>오늘 점심은 <big>{this.props.koreanFood}</big> 먹자</h4>;
+            }
+        }
+        // 상수로 선언한 후 컴포넌트를 랜더링 한다.
+        const myFood = <Food koreanFood="김치찌개" />;
+        ReactDOM.render(myFood , document.getElementById("myDiv2"));
+        
+
+    </script>
+
+    <h2>Props03</h2>
+    <h3>컴포넌트 속성으로 Props 보내기</h3>
+    <div id="myDiv3"></div>
+    <script type="text/babel">
+        class Person extends React.Component{
+            render(){
+                return <h4>제 직업은 {this.props.job} 입니다.</h4>;
+            }
+        }
+
+        class Jobs extends React.Component{
+            render(){
+                // props로 전달할 데이터를 상수로 선언
+                const jobName = "요리사";
+                /*
+                랜더링 시 앞에서 선언한 Person 컴포넌트를 포함한 형태
+                */
+                return (
+                    <div>
+                        <h4>당신의 직업은 무엇인가요?</h4>
+                        <Person job={jobName}/>
+                    </div>
+                );
+            }
+        }
+        ReactDOM.render(<Jobs/> , document.getElementById("myDiv3"));
+        
+
+    </script>
+
+
+    <h2>Props04</h2>
+    <h3>객체(JSON)를 포함한 컴포넌트를 props 전달하기</h3>
+    <div id="myDiv4"></div>
+    <script type="text/babel">
+        class Car extends React.Component{
+            render(){
+                /*
+                JSON으로 전달된 props에 접근시에는
+                {this.props.프롭스 속성명.키값} 와 같이 사용한다.
+                */
+                return (
+                    <div>
+                        <h4>제조사 : {this.props.brand.name}</h4>
+                        <h4>모델명 : {this.props.brand.model}</h4>
+
+                    </div> 
+
+                );
+            }
+        }
+
+        class ShowRoom extends React.Component{
+            render(){
+                /*
+                props로 전달할 데이터가 2개 이상인 경우에는 JSON객체를 통해
+                전달하면 된다
+                */
+                const carinfo = {name:"KIA",model:"K7"};
+                
+                return (
+                    <div>
+                        <h4>당신이 선호하는 자동차는?</h4>
+                        <Car brand={carinfo}/>
+                    </div>
+                );
+            }
+        }
+        ReactDOM.render(<ShowRoom/> , document.getElementById("myDiv4"));
+        
+
+    </script>
+
+
 </body>
 </html>
