@@ -11,6 +11,238 @@
 
 </head>
 <body>
+    <!-- 
+        component
+        - html 요소를 반환하는 함수와 같은 역할
+        - 독립적, 재사용 가능
+        - JS함수와 동일한 용도로 사용됨 + 렌더링을 통해 HTML을 반환
+        - class 형태와 function형태 두가지가 사용됨
+     -->
+     <!-- 
+         component 제작
+         - 이름은 대문자로 시작
+         - React.Component를 상속 > 접근 권한을 부여받음
+         - render() 메소드에서 HTML코드 반환
+         - 클래스 명이 Car라면 render() 함수에서는 <Car />로 기술
+      -->
+    <div id='myClass'></div>
+    <script type="text/babel">
+    class Car extends React.Component{
+        render(){
+            return <h4>드라이브 가자</h4>
+        }
+    }
+    ReactDOM.render(<Car/>,document.getElementById('myClass'));
+    </script>
+
+    <h2>함수형 컴포넌트</h2>
+    <div id='myFunction'></div>
+    <script type="text/babel">
+    /*
+    함수 형태의 컴포넌트는 함수 자체가 render() 역할을 하기 때문에
+    render()함수 내에서 return 하지 않는다.
+    */
+    function Computer() {
+        return <h4>컴퓨터 바꿨다</h4>
+    }
+
+    ReactDOM.render(<Computer /> , document.getElementById('myFunction'));
+    </script>   
+
+
+
+    <h2>Constructor(생성자)</h2>
+    <div id="myConstructor"></div>
+    <script type="text/babel">
+    class Animal extends React.Component{
+        /*
+        Java에서 생성자와 동일한 역항를 하는 메소드로 변수 초기화에 주로 이용된다.
+        */
+        constructor(){
+            super();
+            /*
+            state : component의 상태를 저장할 수 있으며, component 내부에서
+                    상태값을 변경할 수 있다.
+            */
+            this.state = {dog:'포메', cat:'냥이'};
+        }
+
+        render(){
+            return(
+                <div>
+                <h4>나는 {this.state.dog}가 좋다.</h4>
+                <h4>나는 {this.state.cat}가 좋다.</h4>
+                </div>
+            );
+        }
+    }
+    ReactDOM.render(<Animal/>,document.getElementById('myConstructor'));
+    </script>
+
+
+    <h2>component 중첩해서 사용하기</h2>
+    <div id="myCiC"></div>
+    <script type="text/babel">
+    class Computer extends React.Component{
+        render(){
+            return <h4>iMac</h4>
+        }
+    }
+
+    /*
+    JSP의 include와 동일하게 component가 다른 component를 포함하는
+    형태로 사용할 수 있다. 단 이때도 최상위 엘리먼트는 하나만 존재해야 한다.
+    */
+    class Notebook extends React.Component{
+        render(){
+            return(
+                <div>
+                    {/*순서대로 출력됨*/}
+                    <Computer /> 
+                    <h4>아이맥 예쁘다</h4>    
+                </div>
+            );
+        }
+    }
+    ReactDOM.render(<Notebook />, document.getElementById('myCiC'));
+
+
+
+
+
+    </script>
+
+    <h2>===================================================================</h2>
+
+    <!-- 
+        props(Properties)
+        - React의 구성요소에 전달되는 일종의 매개변수(파라미터)를 의미한다.
+        - 주로 HTML 속성을 통해 component로 전달된다.
+        - 개발에서 많이 사용되는 용어인 Properties(속성)의 줄임말이다.
+        - 사용자가 component로 전달해서 변경되지 않고 보관되는 읽기 전용 데이터이다.
+        - 만약 변경해야 한다면 component 내부가 아닌, 부모 component에서 변경해야 한다.
+     -->
+    <h2>Props01</h2>
+    <h3>component로 HTML속성 props 보내기</h3>
+    <div id="myDiv"></div>
+    <script type="text/babel">
+    class Colorful extends React.Component{
+        render(){
+            return(
+                // 전달받은 props는 표현식을 통해 접근한다.
+                // {this.props.속성명}
+                <h4>난 {this.props.color} 색상이 좋아</h4>
+            );
+        }
+    }
+    // Colorful component를 rendering할때 color라는 props를 전달한다.
+    ReactDOM.render(<Colorful color="보라색"/>,document.getElementById('myDiv'));
+    </script>
+
+    <h2>Props02</h2>
+    <h3>HTML 속성을 변수 처리 후 props 보내기</h3>
+    <div id="myDiv2"></div>
+    <script type="text/babel">
+    class Food extends React.Component{
+        render(){
+            return(
+                <h4>오늘 점심은 {this.props.food}</h4>
+            );
+        }
+    }
+
+    const myFood = <Food food="김치+계란"/>;
+    ReactDOM.render(myFood ,document.getElementById('myDiv2'));
+
+    </script>
+
+    <h2>Props03</h2>
+    <h3>component속성으로 props 보내기</h3>
+    <div id="myDiv3"></div>
+    <script type="text/babel">
+        class Person extends React.Component{
+            render() {
+                return (
+                     <h4>제 직업은 {this.props.job} 입니다.</h4>
+                );
+            }
+        }
+
+        class Jobs extends React.Component{
+            render(){
+                const jobName = "개발자";
+
+                return(
+                    <div>
+                        <h4>당신의 직업은 무엇인가요</h4>
+                        <Person job={jobName} />    
+                    </div>
+                );
+
+            }
+        }
+
+        ReactDOM.render(<Jobs/> , document.getElementById("myDiv3"));
+
+    </script>   
+
+      
+    <h2>Props04</h2>
+    <h3>객체(JSON)를 포함한 컴포넌트를 props 전달하기</h3>
+    <div id="myDiv4"></div>
+    <script type="text/babel">
+    class Car extends React.Component{
+        render() {
+            return (
+                 <div>
+                    <h4>제조사 : {this.props.brand.name}</h4>
+                    <h4>모델명 : {this.props.brand.model}</h4>
+
+                    </div>
+            );
+        }
+    }
     
+    class ShowRoom extends React.Component{
+        render() {
+            const carinfo = {name: "Benz",model:"gls580"};
+            return (
+                <div>
+                    <h4>자동차!</h4>
+                    <Car brand={carinfo} />
+                </div>
+            );
+        }
+    }
+    ReactDOM.render(<ShowRoom/> , document.getElementById("myDiv4"));
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
