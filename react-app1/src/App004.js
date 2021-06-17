@@ -19,25 +19,15 @@ class App extends Component{
     super(props);
     // state를 생성 및 초기화
     this.state = {
-          subject : {title:"WEB(st)", sub:"World Wide Web(st)"},
-          contents : [
-                        {id:1, title:'HTML',desc:'HTML은 내용을 출력합니다.'},
-                        {id:2, title:'CSS',desc:'CSS는 스타일을 지정합니다.'},
-                        {id:3, title:'JavaScript', desc:'JS는 화면을 동적으로 제어합니다.'}
-                      ]
+          subject : {title:"WEB(st)", sub:"World Wide Web(st)"}
         }
   }
-  /*
-  Navi 컴포넌트에 반복되는 링크를 for문으로 처리하기 위해
-  state에 contents 항목을 추가한다. 객체 3개를 저장한 배열의 형태이다.
-  Navi컴포넌트로 props를 통해 전달한다.
-  */
   render(){
     return(
       <div className="App">
         {/* /Hello World */}
         <Subject title={this.state.subject.title}  sub={this.state.subject.sub} />
-        <Navi data={this.state.contents}/>
+        <Navi />
         <Content title="HTML(pr)" desc="HTML is HyperText Markup Language.(pr)" />
       </div>
     );
