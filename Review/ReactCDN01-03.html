@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+    <div id="myDiv"></div>
+
+    <!-- 
+        React.js
+        - create-react-app 에서는 babel, webpack, jest 등의 기능을 지원함
+     -->
+    <script type="text/babel"> 
+    class Hello extends React.Component{
+        // JS의 클래스를 통해 리액트 컴포넌트를 생성한다.
+        render(){
+            // 컴포넌트에서는 redner() 함수를 통해 출력할 내용을 반환해야 한다.
+            return <h1>Hello React</h1>
+        }
+    }
+    // 컴포넌트를 지정한 엘리먼트를 출력한다. 컴포넌트는 <컴포넌트명 /> 형식으로 사용한다.
+    ReactDOM.render(<Hello />, document.getElementById('myDiv'));
+    </script>
+
+
+    <div id="mydiv1"></div>
+    <div id="mydiv2"></div>
+
+    <script type="text/babel">
+    /*
+    ReactDOM.render() 함수
+        : HTML코드를 웹브라우저의 지정된 DOM 엘리먼트에 렌더링 해주는 함수
+    */
+    const myElement = (
+        <table>
+            <tr>
+                <th>Name</th>
+            </tr>
+            <tr>
+                <td>알라딘</td>
+            </tr>
+        </table>
+    );
+
+    class MyClass extends React.Component{
+        render(){
+            return <h1>React.Component를 상속한 MyClass</h1>
+        }
+    }
+    ReactDOM.render(myElement, document.getElementById('mydiv1'));
+    ReactDOM.render(<MyClass />, document.getElementById('mydiv2'));
+    </script>
+
+
+    
+    <!-- 
+        JSX(JavaScript XML)
+        - React.js에서 HTML을 좀 더 쉽게 사용하기 위해 작성된다.
+        - 만약 JSX가 없다면 React.createElement() 메소드를 사용해야 한다.
+        - 컴파일 하기에 최적화되고, 빠른 속도를 가진다.
+        - class 형태로 만들어진 컴포넌트에서는 반드시 render() 함수가 존재해야 하고
+            그 내부에서는 JSX를 return 하도록 코딩해야 한다.
+        - 최상위 엘리먼트가 반드시 한개만 존재해야 한다.
+
+     -->
+
+     <style>
+         #soBig{color:red;}
+     </style>
+
+    <h2>JSX(JavaScript XML) 사용시</h2>
+    <div id="myDiv1"></div>
+
+    <h2>JSX 미사용시</h2>
+    <div id="myDiv2"></div>
+
+
+    <h2>JSX Curly Braces(표현식 : {})</h2>
+    <div id="myDiv3"></div>
+
+
+    <script type="text/babel">
+    // JSX 사용하여 렌더링. HTML태그와 유사함 => 편리함
+    const myElement = <h4>JSX</h4>
+    ReactDOM.render(myElement, document.getElementById('myDiv1'));
+
+    // JSX없이 출력하고자 할때는 React.createElement() 메소드를 이용한다.
+    const yourElement = React.createElement('h4',{id:'soBig'},"JSX가 없을때");
+    ReactDOM.render(yourElement, document.getElementById('myDiv2'));
+
+    // Curly Braces(표현식) : React의 변수, 속성, 계산식 등 실행하고 결과를 리턴함
+    const outElement = <h4>표현식은 콧수염을 이용함 : {5+5}</h4>;
+    ReactDOM.render(outElement, document.getElementById('myDiv3'));
+
+
+    </script>
+
+</body>
+</html>

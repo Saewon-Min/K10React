@@ -180,10 +180,92 @@ props와 state
 
 ------------------------------------------------2020-06-17----------------------------------------------------------------
 
+***** component의 라이프 사이클(수명주기) *****
+component가 브라우저에 보일때, 사라질때 혹은 업데이트 등이 발생할때 호출되는 메소드이다.
+
+** component 초기 생성과 관련된 메소드
+
+[constructor]
+- 생성자 함수로 component가 생성될때 호출된다.
+
+[componentWillMount] -- 권장X
+-component가 화면에 보이기 직전에 호출되는 메소드로 리액트 v16.3에서는 해당 메소드가   
+    deprecated 되었다.
+    deprecated : Deprecated의 사전적 의미를 찾아보면 
+        “중요도가 떨어져 더 이상 사용되지 않고 앞으로는 사라지게 될”이란 의미의 형용사다. 
+        자바 API에서 Deprecated란 단어를 종종 찾아볼 수 있는데 
+        클래스나 메소드에 Deprecated가 붙어 있다면 앞으로는 사용하지 않는 것이 좋다. 
+        자바 API는 하위 호환성을 고려하여 설계되어 있기 때문에 
+        버전업이 되어 더 이상 사용되지 않는 
+        클래스나 메소드라도 바로 삭제하지 않고 Deprecated라는 단어를 사용하여 표시한다.
+- v16.3 이후부터는 UNSAFE-componentWillMount()라는 이름으로 사용된다.
+- 이 메소드에서 하던 일들은 constructor 와 componentDidMount에서 충분히 처리할 수 있다.
+
+
+[componentDidMount]
+- component가 화면에 보일 때 호출되는 메소드로 주로 네트웤으로 외부 API를 불러오거나
+    Ajax 요청을 하는 작업 등을 여기서 한다.
 
 
 
+** component 업데이트와 관련된 메소드
+component의 업데이트는 props의 변화 그리고 state의 변화에 따라 결정된다.
 
+[componentWillReceiveProps]-- 권장X
+- component가 새로운 props를 받게 됐을 때 호출된다. 여기에서는 주로 state가 props에 따라
+    변해야 하는 로직을 작성한다. 새로 받게 될 props는 nextProps로 파악 할 수 있다.
+    this.props는 업데이트 되기 전이다.
+- 이 메소드 또한 v16.3부터 deprecate 된다. v16.3부터는 UNSAFE_componentWillReceiveProps()라는
+    이름으로 제공된다.
+- 그리고, 이 기능은 상황에 따라 새로운 추가된 메소드인 getDerivedStateFromProps로 대체 할 수 있다.
+
+[getDerivedStateFromProps]
+- v16.3 이후에 새롭게 추가된 메소드로 props로 받아온 값을 state로 동기화 하는 작업을 해줘야하는
+    경우에 사용된다.
+
+[shouldComponentUpdate]
+- component를 최적화(Optimizer)와 관련된 메소드이다. 최적화란 불필요한 렌더링 작업을
+    막는 것을 말한다.
+- 리액트에서는 변화가 발생하는 부분만 업데이트를 해준다. 그 이유는 변화가 발생한 부분을
+    감지해내기 위해 Virtual DOM에 한번 Rerendering(리렌더링) 하기 때문이다.
+- 이는 다른 말로 자식 component의 상태가 업데이트 되지 않아도 부모 component가 
+    리렌더링 되면 자식 component들도 렌더링(render()함수 호출) 된다는 것이다.
+    물론 자식 component에 변화가 없으면 실제 자식 DOM조작은 하지 않는다.
+    그냥 Virtual DOM에만 렌더링 할 뿐이다.
+- 만약 component가 무수히 많이 렌더링된다면 CPU 자원을 낭비하게 되는것이다.
+    낭비되는 CPU자원을 줄이기 위해서 우리는 Virtual DOM에 리렌더링 하는 것도 불필요할 
+    경우엔 방지하기 위해서 shouldComponentUpdate를 작성한다.
+- 이 메소드는 기본적으로 true를 반환한다. false를 반환하면 render함수를 호출하지 않는다.
+- 즉, 특정 조건에서 false를 반환해 render함수를 호출하지 않도록 할 수 있다.
+
+[componentWillUpdate]-- 권장X
+- shouldComponentUpdate에서 true를 반환했을때만 호출된다.
+- 여기선 주로 애니메이션 효과를 초기화하거나 이벤트 리스너를 없애는 작업을 한다.
+- 이 함수가 호출되고 난 다음에는 render()가 호출된다.
+- 이 메소드 또한 v16.3 이후 deprecate 되었다.
+- 기존의 기능은 getSnapshotBeforeUpdate메소드로 대체 될 수 있다.
+
+[getSnapshotBeforeUpdate]
+- render() 함수가 호출되고 나서 호출되는 메소드로 실제 DOM에 변화가 일어나기 직전의
+    DOM 상태를 가져올 수 있다.
+- 이 메소드에서 리턴하는 값은 componentDidUpdate 에서 3번째 파리미터로 받아올 수 있다.
+
+[componentDidUpdate]
+- 역시 component에서 render()를 호출하고 난 다음에 발생하는 메소드로 getSnapshotBeforeUpdate()
+    이후에 호출된다.
+- this.props 와 this.state가 변화된 상태이다.
+- 사용한 외부 라이브러리를 해제하는 경우에 사용한다.
+
+
+
+이벤트 처리
+- React 이벤트 핸들러는 Camel Case 구문으로 작성해야 한다.
+    * onclick => 에러 발생 | onClick => 정상 동작
+- 이벤트 핸들러에서 함수 호출시 중괄호 안에 작성한다.
+    * onClick={shoot}
+- 함수 내에서 this를 사용하는 경우, 호출한 대상에 관계없이 항상 정의된 객체를 가리키게
+    하려면 화살표 함수를 사용해야 한다.
+- 만약 일반 함수를 사용해야 한다면, bind()함수를 이용해서 객체와 함수를 바인딩 해야한다.
 
 
 
