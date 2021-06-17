@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>09Form4.html</title>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+</head>
+<body>
+    <h2>폼 전송(Submit)</h2>
+    <div id="myDiv4"></div>
+    <script type="text/babel">
+        class MyForm4 extends React.Component{
+            constructor(props){
+                super(props);
+                this.state = {userAge : '나이 초기화'};
+            }
+            // submit 이벤트 발생시 호출할 함수
+            mySubmitHandler = (event) =>{
+                /*
+                폼값이 전송되는 것을 막기위해 사용하는 함수
+                화면의 깜빡임없이 데이터를 처리해야 하므로 주로 사용한다.
+                */
+                event.preventDefault();
+                /*
+                React에서는 전송된 폼값을 state를 통해 확인한다.
+                */
+                alert('전송된 폼 값 확인 : '+this.state.userAge);
+            }
+            // 입력상자에서 change이벤트가 발생했을 때 호출하는 함수
+            myChangeHandler = (event) =>{
+                // 이벤트 객체를 통해 state값을 변경시킨다.
+                this.setState({userAge:event.target.value});
+            }
+            render(){
+                return(
+                <form onSubmit={this.mySubmitHandler}>
+                    <h3>입력한 나이 : {this.state.userAge}</h3>
+                    <p> 님의 나이를 입력하세요</p>
+                    <input type="text" onChange={this.myChangeHandler} />
+                    {/*input 태그 작성시 아래와 같이 pair 형태로 사용해도 된다.*/}
+                    <input type="submit"></input>
+                </form>
+                );
+            }
+        }
+
+        ReactDOM.render(<MyForm4/>, document.getElementById('myDiv4'));
+    </script>
+</body>
+</html>

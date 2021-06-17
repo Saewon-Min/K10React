@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>09Form2.html</title>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+</head>
+<body>
+    <h2>폼에서 발생한 이벤트 처리</h2>
+    <div id="myDiv2"></div>
+    <script type="text/babel">
+    class MyForm2 extends React.Component{
+        constructor(props) {
+            super(props);
+            // 생성자에서 state 생성 및 초기화
+            this.state = {username : "초기화됨"};
+        }
+
+        /*
+        이벤트 객체를 파라미터로 전달 받아 state값을 변경한다. 
+        state값 변경을 위해 setState() 함수를 사용한다. 
+        */
+        myChangeHandler = (event)  => {
+            this.setState({username : event.target.value});
+        }
+
+        /*
+        순수 HTML에서는 change이벤트를 select 태그에만 사용할 수 있으나
+        React에서는 input태그에 사용할 수 있다. 
+        이벤트 발생시 변경된 state값을 아래에서 출력한다. 
+        */
+        render(){
+            return(
+                <form>
+                    <h1>입력한 이름은 : {this.state.username}</h1>    
+                    이름 :  <input type="text" onChange={this.myChangeHandler} />
+                </form>
+            );
+        }
+    }
+    ReactDOM.render(<MyForm2/>,document.getElementById('myDiv2'));
+    </script>
+
+
+</body>
+</html>

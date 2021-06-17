@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>09Form6.html</title>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+</head>
+<body>
+    <h2>폼값검증</h2>
+    <div id="myDiv6"></div>
+    <script type="text/babel">
+    class MyForm6 extends React.Component{
+
+        constructor(props){
+            super(props);
+            // 입력상자의 내용을 저장할state생성
+            this.state = {
+                user_id : '',
+                user_pass : '',
+                user_age : null,
+                errormessage : ''
+
+            };
+        }
+        // submit 이벤트 발생시 호출되는 함수
+        mySubmitHandler =(event) =>{
+            event.preventDefault(); // 폼값 전송 취소
+
+            // state를 통해 각 입력값을 얻어온다.
+            let user_id = this.state.user_id;
+            let user_pass = this.state.user_pass;
+            let user_age = this.state.user_age;
+            let err = '';
+            // 아이디/패스워드 입력값이 있는지 검증
+            if(user_id==''){
+                alert('아이디를 입력하세요');
+                return;
+            }
+            if(user_pass==''){
+                alert('패스워드를 입력하세요');
+                return;
+            }
+            /*
+            숫자인지 여부를 확인하기 위해 Number()함수를 사용한다.
+            숫자인 경우 true 반환
+            만약 숫자가 아닌 경우 true를 반환 받고 싶다면 isNaN()을 사용한다.
+            */
+            if(!Number(user_age)){
+                alert('나이는 숫자만 입력하세요');
+                return;
+            }
+
+            // 모든 검증이 완료된 경우 출력을 위한 JSX를 state값으로 설정한다.
+            err = <strong>폼값검증완료</strong>;
+            this.setState({errormessage:err});
+        }
+
+        // 입력값이 변화될때마다 실시간으로 state에 적용한다.
+        myChangeHandler = (event) => {
+            let _key = event.target.name;
+            let _val = event.target.value;
+
+            this.setState({[_key]:_val});
+            //console.log(_key , _val);
+        }
+
+        render(){
+            return(
+                <form onSubmit={this.mySubmitHandler}>
+                    <h3>회원가입</h3>
+                    아이디 : <input type="text" name='user_id' onChange={this.myChangeHandler}/>
+                    <br/>
+                    패스워드 : <input type="password" name='user_pass' onChange={this.myChangeHandler}/>
+                    <br/>
+                    나이(숫자만) : <input type="number" name='user_age' onChange={this.myChangeHandler}/>
+                    <br/>
+                    {this.state.errormessage}
+                    <br/>
+                    <input type="submit"/>
+                </form>
+
+            );
+        }
+    }
+    ReactDOM.render(<MyForm6/>,document.getElementById('myDiv6'));
+    </script>
+</body>
+</html>
