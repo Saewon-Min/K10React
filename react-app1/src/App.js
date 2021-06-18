@@ -36,8 +36,21 @@ class App extends Component{
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
     }else if(this.state.mode === 'read'){
-      _title = this.state.contents[0].title;
-      _desc = this.state.contents[0].desc;
+      //_title = this.state.contents[0].title;
+      //_desc = this.state.contents[0].desc;
+      /*
+      selected_content_id값과 일치하는 객체를 찾아서 제목과 내용 부분을
+      설정한다.
+      */
+      var i = 0;
+      while(i < this.state.contents.length){
+        var data = this.state.contents[i];
+        if(data.id === this.state.selected_content_id){
+          _title = data.title;
+          _desc = data.desc;
+          break;
+        }
+      }
     }
 
     /*
@@ -53,6 +66,8 @@ class App extends Component{
             this.setState({mode:'welcome'});
           }.bind(this)}/> 
         
+
+        {/* 자식(Navi)에서 보내준 data-id값을 인자로 받은 후 selected_content_id값을 변경한다.  */}
         <Navi data={this.state.contents}
           onChangePage={function(id){
             //alert('확인용(Navi)');

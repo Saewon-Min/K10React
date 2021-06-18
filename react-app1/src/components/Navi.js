@@ -20,6 +20,7 @@ class Navi extends Component{
                         //debugger; // 실행을 잠시 멈추고 디버깅모드로 진입하게 된다.
                         event.preventDefault();
                         // 부모가 props로 전달해준 함수를 호출한다.
+                        // data-id의 값을 얻어와서 함수의 인자로 전달한다.
                         this.props.onChangePage(event.target.dataset.id);
                       }.bind(this)}
                     >{data[i].title}
