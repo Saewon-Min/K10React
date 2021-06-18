@@ -18,7 +18,6 @@ class App extends Component{
     super(props);
     this.state = {
           mode : 'welcome',
-          selected_content_id : 2,
           welcome : {title:'Welcome',desc:'Hello, React'},
           subject : {title:"WEB(st)", sub:"World Wide Web(st)"},
           contents : [
@@ -41,27 +40,29 @@ class App extends Component{
     }
 
     /*
-    Subject에 작성했던 이벤트를 Navi에도 붙여준다.
-
+    Subject 컴포넌트를 우선 App컴포넌트 안으로 가져온다.
+    props로 처리된 부분을 state로 수정한다.
+    링크에 onClick 이벤트를 추가한다.
+    이벤트 객체를 통해 새로고침 되지 않도록
+    e.preventDefault() 함수를 추가한다.
+    함수에서 state값을 변경하기 위해 bind() 해준다.
     */
     return(
       <div className="App">
         {/* /Hello World */}
-        <Subject title={this.state.subject.title}  sub={this.state.subject.sub} 
-          onChangePage = {function(){
-            alert('확인용(부모)');
-            this.setState({mode:'welcome'});
-          }.bind(this)}/> 
-        
-        <Navi data={this.state.contents}
-          onChangePage={function(id){
-            //alert('확인용(Navi)');
-            console.log("content_id",id);
-            this.setState({
-              mode:'read',
-              selected_content_id : Number(id)
-            });
-          }.bind(this)}/>
+        <Subject title={this.state.subject.title}  sub={this.state.subject.sub} /> 
+        <header>
+          <h1>
+            <a href="/" onClick={function(e){
+              //alert('이벤트 확인용');
+              //console.log(e);
+              e.preventDefault();
+              this.setState({mode:'welcome'});
+              }.bind(this)}>{this.state.subject.title}</a>
+          </h1>
+          {this.state.subject.sub}
+        </header>
+        <Navi data={this.state.contents}/>
         <Content title={_title} desc={_desc} />
       </div>
     );

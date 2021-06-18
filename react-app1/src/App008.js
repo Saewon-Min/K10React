@@ -18,7 +18,6 @@ class App extends Component{
     super(props);
     this.state = {
           mode : 'welcome',
-          selected_content_id : 2,
           welcome : {title:'Welcome',desc:'Hello, React'},
           subject : {title:"WEB(st)", sub:"World Wide Web(st)"},
           contents : [
@@ -41,8 +40,16 @@ class App extends Component{
     }
 
     /*
-    Subject에 작성했던 이벤트를 Navi에도 붙여준다.
+    App컴포넌트에서 작업했던 부분을 Subject컴포넌트로 옮긴다.
+    Subject 컴포넌트는 App의 입장에서는 자식이므로 자식에서 부모에게
+    명령을 전달하기 위해서는 이벤트를 사용해야 한다.
+    onChangePage라는 props를 통해 자식에게 함수를 전달하고,
+    Subject에서는 그 함수를 호출하여 부모쪽으로 명령을 전달한다.
+    그렇게 state값을 변경하게 된다.
 
+    React의 규칙
+    부모 컴포넌트가 자식 컴포넌트에게 명령할때는 props를 통해 전달한다.
+    자식이 부모에게 명령할때는 이벤트를 통해 전달한다.
     */
     return(
       <div className="App">
@@ -53,15 +60,7 @@ class App extends Component{
             this.setState({mode:'welcome'});
           }.bind(this)}/> 
         
-        <Navi data={this.state.contents}
-          onChangePage={function(id){
-            //alert('확인용(Navi)');
-            console.log("content_id",id);
-            this.setState({
-              mode:'read',
-              selected_content_id : Number(id)
-            });
-          }.bind(this)}/>
+        <Navi data={this.state.contents}/>
         <Content title={_title} desc={_desc} />
       </div>
     );

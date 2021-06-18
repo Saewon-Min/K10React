@@ -1,12 +1,20 @@
+// 해당 문서에서 React의 기능을 사요요하기 위해 import한다.
 import React, {Component} from 'react';
 import './App.css';
 
-
+/*
+외부 js파일로 모듈화한 컴포넌트를 해당 문서로 import하기 위한
+구문으로, export default로 지정한 이름을 그대로 사용하면 된다.
+  형식]
+  import 변수로 사용할 이름 from '컴포넌트경로'
+*/
 import Subject from './components/Subject';
 import Navi from './components/Navi';
 import Content from './components/Content';
 
+/* 클래스명 컴포넌트(해당 실습에서 사용) */
 class App extends Component{
+  /* state를 추가하기 위해 생성자를 정의한다. */
   /*
   상단의 링크를 눌렀을때 mode를 welcome으로 변경.
   Navi의 링크를 눌렀을때 mode를 read로 변경.
@@ -16,9 +24,9 @@ class App extends Component{
   */
   constructor(props){
     super(props);
+    // state를 생성 및 초기화
     this.state = {
           mode : 'welcome',
-          selected_content_id : 2,
           welcome : {title:'Welcome',desc:'Hello, React'},
           subject : {title:"WEB(st)", sub:"World Wide Web(st)"},
           contents : [
@@ -28,9 +36,16 @@ class App extends Component{
                       ]
         }
   }
-
+  /*
+  Navi 컴포넌트에 반복되는 링크를 for문으로 처리하기 위해
+  state에 contents 항목을 추가한다. 객체 3개를 저장한 배열의 형태이다.
+  Navi컴포넌트로 props를 통해 전달한다.
+  */
   render(){
-
+    /*
+    mode의 상태에 따라서 제목과 내용을 다르게 출력할려고
+    아래 2개의 변수를 추가한 후 mode값에 따른 if문을 작성한다.
+    */
     let _title, _desc = null;
     if(this.state.mode === 'welcome'){
       _title = this.state.welcome.title;
@@ -41,27 +56,14 @@ class App extends Component{
     }
 
     /*
-    Subject에 작성했던 이벤트를 Navi에도 붙여준다.
-
+    앞에서 설정한 _title, _desc를 Content 컴포넌트의 props로
+    기술한다. 그리고 개발자 모드에서 mode를 read로 변경해본다.
     */
     return(
       <div className="App">
         {/* /Hello World */}
-        <Subject title={this.state.subject.title}  sub={this.state.subject.sub} 
-          onChangePage = {function(){
-            alert('확인용(부모)');
-            this.setState({mode:'welcome'});
-          }.bind(this)}/> 
-        
-        <Navi data={this.state.contents}
-          onChangePage={function(id){
-            //alert('확인용(Navi)');
-            console.log("content_id",id);
-            this.setState({
-              mode:'read',
-              selected_content_id : Number(id)
-            });
-          }.bind(this)}/>
+        <Subject title={this.state.subject.title}  sub={this.state.subject.sub} />
+        <Navi data={this.state.contents}/>
         <Content title={_title} desc={_desc} />
       </div>
     );
