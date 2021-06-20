@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+</head>
+<body>
+    <h2>React에서 Form사용하기</h2>
+    <div id="mydiv1"></div>
+    <script type="text/babel">
+    class MyForm extends React.Component{
+        render() {
+            /*
+            폼값 전송시 이벤트 객체를 통해 입력한 태그의 여러가지 속성값을 얻어올 수 있다.
+                type 속성값 : event.target.type
+                value 속성값  : event.target.value
+            */
+            return (
+                 <form >
+                    <p>
+                        {/*JSX의 주석은 이와 같다
+                            이벤트 핸들러에 사용하는 함수는 {} 안에 무기명함수
+                            혹은 화살표 함수 둘 다 사용 가능하다. */}
+                        아이디 : <input type="text" onKeyUp={function(){console.log(event)}}/>    
+                        <br/>
+                        비밀전호 : <input type="text" onKeyUp={() => console.log(event.target.value)}/>    
+                        
+                    </p>    
+                    
+                </form>
+            );
+        }
+    }
+    
+    ReactDOM.render(<MyForm />, document.getElementById('mydiv1'));
+    </script>
+
+
+
+    <h2>폼에서 발생한 이벤트 처리</h2>
+    <div id="myDiv2"></div>
+    <script type="text/babel">
+    class MyForm2 extends React.Component{
+        constructor(props){
+            super(props);
+            this.state = {username : "초기화"};
+        }
+
+        /*
+        이벤트 객체를 파라미터로 전달 받아 state값을 변경한다.
+        state값 변경을 위해 setState() 함수를 사용한다.
+        */
+        myChangeHandler = (eee) =>{
+            this.setState({username: eee.target.value});
+        }
+
+        /*
+        순수 HTML에서는 change이벤트를 select 태그에만 사용할 수 있으나
+        React에서는 input태그에 사용할 수 있다.
+        이벤트 발생시 변경된 state값을 아래에서 출력한다.
+        */
+        render() {
+            return (
+                 <form action="">
+                    <h1>입력한 이름은 : {this.state.username}</h1>
+                    이름 : <input type="text" onChange={this.myChangeHandler} />    
+                </form>
+            );
+        }
+
+
+
+    }
+    ReactDOM.render(<MyForm2/>,document.getElementById('myDiv2'));
+    </script>
+
+
+    <h2>조건부 렌더링</h2>
+    <div id="myDiv3"></div>
+    <script type="text/babel">
+        class MyForm3 extends React.Component{
+            // props 또한 매개변수 이름이므로 원하는 이름을 적어도 된다.
+            constructor(p) {
+                super(p);
+                this.state = {username: ''};
+            }
+
+            // 이벤트를 통해 전달된 값으로 state 변경
+            myChangeHandler = (eee) =>{
+                this.setState({username : eee.target.value});
+            }
+
+            render() {
+                let header = '';
+
+                // 입력된 이름이 있는 경우에만 요소를 추가한다.
+                if(this.state.username){
+                    //console.log(this.state.username);
+                    header = <h1>내 이름은 {this.state.username}</h1>
+                }else{
+                    header='';
+                }
+
+                // input의 changer 이벤트를 통해 함수를 호출함
+                return (
+                     <form action="">
+                        {header} 
+                        <p>님의 이름을 입력하세요</p>   
+                        <p>입력된 내용이 있을때만 디스플레이됩니다</p>
+                        <input type="text" onChange={this.myChangeHandler} />
+                    </form>
+                );
+            }
+
+
+        }
+
+
+        ReactDOM.render(<MyForm3/>,document.getElementById('myDiv3'));
+
+    </script>
+
+
+
+
+    <h2>폼 전송(Submit)</h2>
+    <div id="myDiv4"></div>
+    <script type="text/babel">
+        class MyForm4 extends React.Component{
+            constructor(props){
+                super(props);
+                this.state = {userAge : "나이 초기화"};
+            }
+
+            // submit 이벤트 발생시 호출할 함수
+            mySubmitHandler = (eee) =>{
+                /*
+                폼 값이 전송되는 것을 막기위해 사용하는 함수. 
+                화면의 깜빡임없이 데이터를 처리해야 할때 사용한다.
+                */
+                eee.preventDefault();
+                // React에서 전송된 폼 값은 state를 통해 확인한다
+                alert('전송된 폼 값 확인 : '+this.state.userAge );
+            }
+
+            // input에서 change이벤트가 발생했을때 호출할 함수
+            myChangeHandler = (eee) =>{
+                // 이벤트 객체를 통해 state값을 변경시킨다
+                this.setState({userAge : eee.target.value});
+            }
+
+            render() {
+                return (
+                     <form onSubmit={this.mySubmitHandler}>
+                        <h3>입력한 나이 : {this.state.userAge}</h3>    
+                        <p>님의 나이를 입력하세요</p>
+                        <input type="text" onChange={this.myChangeHandler} />
+                        <input type="submit" />
+                    </form>
+                );
+            }
+
+        }
+
+        ReactDOM.render(<MyForm4/>, document.getElementById('myDiv4'));
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
