@@ -221,5 +221,134 @@
     </script>
 
 
+    <h2>======================================================================</h2>
+
+
+    <!-- 
+        state
+            : React component의 상태를 저장할 때 주로 사용한다.
+            props와 비슷하지만 차이점이라면 state는 컴포넌트 내부에 
+            존재하기 때문에 상태값을 변경할 수 있다.
+            값 변경시에는 setState() 함수를 사용해야 한다.
+     -->
+    <h2>State01</h2>
+    <h3>state 생성 및 초기화, 출력하기</h3>
+    <div id="myArea1"></div>
+    <script type="text/babel"> 
+        class Person extends React.Component{
+            // 생성자 정의
+            constructor(){
+                super();
+                // state를 생성함. JSON객체 형태로 기술함
+                this.state = {
+                    name:"옹성우",
+                    age: 27,
+                    hobby:"운전",
+                    birth:1995
+                };
+
+            }
+    
+            // 각 state 값을 출력한다. 사용법은 props와 동일하다.
+            render() {
+                return (
+                    <div>
+                        <h1>내 이름은 {this.state.name}</h1>
+                        <p>
+                            나이 : {this.state.age} <br/>
+                            취미 : {this.state.hobby}  <br/>
+                            출생년도 : {this.state.birth} <br/>
+                        
+                        </p>
+                    
+                    </div>
+                );
+            }
+    
+    
+            
+        }
+        ReactDOM.render(<Person />, document.getElementById('myArea1'))
+
+    </script>
+
+
+
+    <h2>State02</h2>
+    <h3>함수 호출로 state 변경하기</h3>
+    <div id="myArea2"></div>
+    <script type="text/babel">
+        class Car extends React.Component{
+            constructor(props) {
+                super(props);
+                this.state = {
+                    brand : "bmw",
+                    model : "520d",
+                    color : "파란색",
+                    year : 2020
+                };
+            }
+
+            /*
+            화살표 함수를 통해 멤버함수 생성
+            var 함수명 = function(){} 와 같은 무기명 함수에서
+            function을 제거하고 소괄호와 중괄소 사이에 화살표를 삽입한다
+            var 함수명 = () => {}
+            */
+            changeColor = () =>{
+                // setState() 함수를 통해 state값을 변경한다.
+                this.setState(
+                    {
+                        color:"블루",
+                        model : "m3"
+                    }
+                );
+            }
+
+
+            render() {
+                return (
+                     <div>
+                        <h2>My {this.state.brand}</h2>
+                        <p>
+                            내 차 정보 <br/>
+                            색상 : {this.state.color}<br/>
+                            모델명 : {this.state.model}<br/>
+                            제조년월 : {this.state.year}<br/>
+                            
+                        </p>
+                        
+                        <button type="button" onClick={this.changeColor}>
+                            색상 변경     
+                        </button>
+                            
+                        </div>
+                );
+                /*
+                버튼에 이벤트 핸들러 사용시 반드시 Camel Case형태로 기술해야 한다. 
+                onclick으로 기술하면 에러가 발생한다.
+                버튼을 클릭할 때 changeColor() 함수를 호출한다. 
+                */
+            }
+
+        }
+        ReactDOM.render(<Car/>,document.getElementById('myArea2'));
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
