@@ -14,7 +14,12 @@ class App extends Component{
 
   constructor(props){
     super(props);
-
+    /*
+    새로운 항목을 추가할때 시퀀스와 같이 증가시킬 변수가 필요하다.
+    현재 추가된 항목의 개수를 초기값으로 지정한다.
+    또한 state에 추가하지 않은 이유는 화면(UI)과는 상관없는 값이므로
+    변경시 불필요한 렌더링을 막기 위함이다.
+    */
     this.max_content_id=3;
     this.state = {
           mode : 'welcome',
@@ -66,38 +71,24 @@ class App extends Component{
         });
       }.bind(this)}></CreateForm>;
     }else if(this.state.mode==='update'){
-    
-      //let _readData = this.state.contents[this.state.selected_content_id-1];
-      let _readData;
-      let i=0;
-      while(i<this.state.contents.length){
-        var data = this.state.contents[i];
-        if(data.id===this.state.selected_content_id){
-          _readData = data;
-          break;
-        }
-        i++;
-      }
-
+      /*
+      현재 read중인 게시물의 id를 통해 객체를 얻어온 뒤 변수에 저장한다.
+      그리고 컴포넌트의 props로 전달한다.
+      */
+      // ※ 아래 코드는 게시물을 삭제하는 경우에는 index에 문제가 발생할수 있다.
+      let _readData = this.state.contents[this.state.selected_content_id-1];
 
       _article = <UpdateForm readData={_readData} onSubmitValue={function(_id,_title,_desc){
         console.log(_id,_title,_desc);
 
-     
+        /*
+        기존의 배열을 복사하기 위해 Array.from()을 사용한다.
+        */
         var _contents = Array.from(this.state.contents);
-        
-        // _contents[this.state.selected_content_id-1] 
-        //   = {id:Number(_id), title:_title, desc: _desc};
-
-        let i=0;
-        while(i<_contents.length){
-        var data = _contents[i];
-        if(data.id===Number(_id)){
-          _contents[i] = {id:Number(_id), title:_title, desc: _desc};
-          break;
-        }
-        i++;
-      }
+        // 수정할 index를 선택한 후 수정할 내용을 삽입한다.
+        _contents[this.state.selected_content_id-1] 
+          = {id:Number(_id), title:_title, desc: _desc};
+        // state값을 변경한다.
         this.setState({
           contents : _contents,
           mode : "read"
@@ -105,11 +96,6 @@ class App extends Component{
 
 
       }.bind(this)}></UpdateForm>;
-    }else if(this.state.mode==='delete'){
-      /*
-      삭제를 여기에서 처리하면 렌더링이 2번 발생하게 되므로
-      비효율적이다.
-      */
     }
 
 
@@ -134,33 +120,9 @@ class App extends Component{
 
           <Buttons onChangeMode={
             function(btn_mode){
-              if(btn_mode==='delete'){
-                // 리엑트에서는 confirm() 사용시 window를 반드시 붙여야한다.
-                if(window.confirm('삭제하시겠습니까?')){
-                  // 기존의 배열을 복사한다.
-                  var _contents = Array.from(this.state.contents);
-                  var i=0;
-                  // 복사한 배열에서 삭제할 id값을 가진 요소를 찾는다.
-                  while(i<_contents.length){
-                    if(_contents[i].id === this.state.selected_content_id){
-                      // splice()를 통해 i번째 인덱스 요소를 1개 삭제한다.
-                      _contents.splice(i,1);
-                      break;
-                    }
-                    i++;
-                  }
-                  // 삭제 후에는 게시물이 없어지므로 welcome으로 이동한다.
-                  this.setState({
-                    mode : 'welcome',
-                    contents : _contents
-                  });
-                }
-              }
-              else{
-                this.setState({
-                  mode : btn_mode
-                });
-            }
+              this.setState({
+                mode : btn_mode
+              });
             }.bind(this)}></Buttons>
             {_article}
 

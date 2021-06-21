@@ -5,15 +5,11 @@ import './App.css';
 import Subject from './components/Subject';
 import Navi from './components/Navi';
 import Content from './components/Content';
+import Buttons from './components/Buttons';
+
 
 class App extends Component{
-  /*
-  상단의 링크를 눌렀을때 mode를 welcome으로 변경.
-  Navi의 링크를 눌렀을때 mode를 read로 변경.
-  각 내용을 가져와서 출력하기 위해 state를 추가함.
-  - mode 추가
-  - welcome 추가
-  */
+
   constructor(props){
     super(props);
     this.state = {
@@ -38,10 +34,6 @@ class App extends Component{
     }else if(this.state.mode === 'read'){
       //_title = this.state.contents[0].title;
       //_desc = this.state.contents[0].desc;
-      /*
-      selected_content_id값과 일치하는 객체를 찾아서 제목과 내용 부분을
-      설정한다.
-      */
       var i = 0;
       while(i < this.state.contents.length){
         var data = this.state.contents[i];
@@ -54,13 +46,9 @@ class App extends Component{
       }
     }
 
-    /*
-    Subject에 작성했던 이벤트를 Navi에도 붙여준다.
 
-    */
     return(
       <div className="App">
-        {/* /Hello World */}
         <Subject title={this.state.subject.title}  sub={this.state.subject.sub} 
           onChangePage = {function(){
             alert('확인용(부모)');
@@ -68,7 +56,6 @@ class App extends Component{
           }.bind(this)}/> 
         
 
-        {/* 자식(Navi)에서 보내준 data-id값을 인자로 받은 후 selected_content_id값을 변경한다.  */}
         <Navi data={this.state.contents}
           onChangePage={function(id){
             //alert('확인용(Navi)');
@@ -78,6 +65,17 @@ class App extends Component{
               selected_content_id : Number(id)
             });
           }.bind(this)}/>
+          {/* 
+          추가, 수정, 삭제 버튼 컴포넌트를 삽입한다.
+          각 버튼을 눌렀을때 mode를 변경하기 위해 사용자가 정의한
+          이벤트를 props를 통해 전달한다.
+          */}
+          <Buttons onChangeMode={
+            function(btn_mode){
+              this.setState({
+                mode : btn_mode
+              });
+            }.bind(this)}></Buttons>
         <Content title={_title} desc={_desc} />
       </div>
     );
