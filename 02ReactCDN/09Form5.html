@@ -11,7 +11,7 @@
 
 </head>
 <body>
-    <h2></h2>
+    <h2>여러개의 input태그가 있는 폼</h2>
     <div id="myDiv5"></div>
     <script type="text/babel">
     class MyForm5 extends React.Component{
@@ -45,6 +45,8 @@
                 <form>
                     <h3>입력한 값 : {this.state.movie} / {this.state.actor}</h3>    
                     <h4>{this.state.content}</h4>
+                    {/* onChange는 input의 text값이 바뀔때마다 발생하는 이벤트이다. */}
+
                     영화 : <input type="text" name='movie' onChange={this.myChangeHandler} />
                     <br/>
                     주연배우 : <input type="text" name='actor' onChange={this.myChangeHandler} />
