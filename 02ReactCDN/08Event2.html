@@ -71,8 +71,8 @@
         class EventObjSend1 extends React.Component{
             // 전달되는 이벤트를 매개변수로 받아 type을 출력하면 해당
             // 이벤트명이 출력된다. 
-            sendEvent = (msg,evt) => {
-                console.log('화살표함수',msg,evt.type);
+            sendEvent = (eee,ttt) => {
+                console.log('화살표함수',eee,ttt.type);
             }
 
             /*
@@ -107,7 +107,7 @@
             sendEvent(msg,evt) {
                 console.log('일반함수',msg,evt.type);
             }
-
+            
             
             render(){
                 /*
@@ -117,6 +117,12 @@
                 */
                 return(
                     <div>
+
+                        <button 
+                        onClick={(event) => this.sendEvent("onClick 이벤트",event)
+                        }>눌러보세요1</button>
+
+
                     <button onClick={this.sendEvent.bind(this,"onClick 이벤트")
                     }>눌러보세요2</button>
                     <br/>
