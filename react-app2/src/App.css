@@ -1,38 +1,16 @@
-.App {
-  text-align: center;
+.App{
+  margin: 10px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+div{
+  border: 3px solid rgb(57, 241, 118);
+  margin: 5px;
+  padding: 5px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* NavLink를 통해 각 엘리먼트에 class='active'가 부여된다. */
+.active{
+  background-color: yellowgreen;
+  text-decoration: none;
+  font-weight: bold;
 }
