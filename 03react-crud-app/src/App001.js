@@ -1,4 +1,4 @@
-// 해당 문서에서 React의 기능을 사요요하기 위해 import한다.
+// 해당 문서에서 React의 기능을 사용하기 위해 import한다.
 import React, {Component} from 'react';
 import './App.css';
 
