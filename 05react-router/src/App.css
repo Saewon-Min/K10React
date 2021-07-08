@@ -1,0 +1,16 @@
+.App{
+  margin: 10px;
+}
+
+div{
+  border: 3px solid rgb(57, 241, 118);
+  margin: 5px;
+  padding: 5px;
+}
+
+/* NavLink를 통해 각 엘리먼트에 class='active'가 부여된다. */
+.active{
+  background-color: yellowgreen;
+  text-decoration: none;
+  font-weight: bold;
+}
