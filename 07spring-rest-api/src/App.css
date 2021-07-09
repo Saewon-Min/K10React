@@ -1,0 +1,18 @@
+#lay_top{
+    height: 100px; background-color: blueviolet; font-size: 2.5em;
+    line-height: 100px; text-align: center;
+}
+#lay_top p{
+    width:100%;
+}
+#lay_left{
+    background-color: antiquewhite; font-size: 2.5em; text-align: center;
+}
+#lay_left p {width: 100%;}
+#lay_contents{font-size: 12px; padding:20px 10px;}
+#lay_contents td{padding: 5px;}
+#lay_bottom{
+    height: 100px;background-color: greenyellow; font-size: 2.5em;
+    text-align: center; line-height: 100px;
+}
+#lay_bottom p{width: 100%;}
